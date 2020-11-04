@@ -1,18 +1,28 @@
 #!/bin/bash
 
-echo "Flipping a Coin to show Head or Tail...."
-head=1
-tail=0
+declare -A dictCoin
+read -p "Enter Number of Tosses:" toss
+heads=1
+tails=0
+head_count=0
+tail_count=0
+for (( i=0; i<=toss; i++ ))
+do
+	flip=$(( RANDOM % 2 ))
+	if [[ $flip -eq $heads ]]
+	then
+		head_count=$(( $head_count + 1 ))
+	elif [[ $flip -eq $tails ]]
+	then
+		tail_count=$(( $tail_count + 1 ))
+	else
+		exit
+	fi
 
-flip=$(( RANDOM % 2 ))
-echo " "
-if [[ $flip -eq $head ]]
+done
+if (( $head_count > $tail_count ))
 then
-	echo "Head Wins"
-
-elif [[ $flip -eq $tail ]]
-then
-	echo "Tail Wins"
+	echo "Head Wins by $head_count Flips"
 else
-	exit
+	echo "Tails Wins by $tail_count Flips"
 fi
